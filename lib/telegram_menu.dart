@@ -18,6 +18,15 @@ class TelegramMenu extends StatelessWidget {
     MenuRowData(Icons.language, 'Язык'),
   ];
 
+  final List<MenuRowData> thirdMenuRow = [
+    MenuRowData(Icons.star, 'Telegram Premium'),
+  ];
+
+  final List<MenuRowData> fourthMenuRow = [
+    MenuRowData(Icons.message, 'Задать вопрос'),
+    MenuRowData(Icons.question_mark, 'Вопросы о Telegram'),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,17 +38,20 @@ class TelegramMenu extends StatelessWidget {
       ),
       body: Container(
         width: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _UserInfo(),
-              SizedBox(height: 20),
-              _MenuWidget(menuRow: firstMenuRow),
-              SizedBox(height: 20),
-              _MenuWidget(menuRow: secondMenuRow),
-            ],
-          ),
+        child: ListView(
+          physics: BouncingScrollPhysics(),
+          children: [
+            _UserInfo(),
+            SizedBox(height: 20),
+            _MenuWidget(menuRow: firstMenuRow),
+            SizedBox(height: 20),
+            _MenuWidget(menuRow: secondMenuRow),
+            SizedBox(height: 20),
+            _MenuWidget(menuRow: thirdMenuRow),
+            SizedBox(height: 20),
+            _MenuWidget(menuRow: fourthMenuRow),
+          ],
+        ),
       ),
     );
   }
@@ -73,7 +85,7 @@ class _MenuWidgetRow extends StatelessWidget {
   const _MenuWidgetRow({
     Key? key,
     required this.data,
-    }) : super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -97,22 +109,40 @@ class _UserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      color: Colors.white,
-      child: Column(
-        children: const [
-          SizedBox(height: 20),
-          _AvatarWidget(),
-          SizedBox(height: 15),
-          _NameWidget(),
-          SizedBox(height: 15),
-          _TelephoneWidget(),
-          SizedBox(height: 15),
-          _NickNameWidget(),
-          SizedBox(height: 15),
-        ],
-      ),
+    return Stack(
+      children: [
+        Container(
+          width: double.infinity,
+          color: Colors.white,
+          child: Column(
+            children: const [
+              SizedBox(height: 20),
+              _AvatarWidget(),
+              SizedBox(height: 15),
+              _NameWidget(),
+              SizedBox(height: 15),
+              _TelephoneWidget(),
+              SizedBox(height: 15),
+              _NickNameWidget(),
+              SizedBox(height: 15),
+            ],
+          ),
+        ),
+        Positioned(
+          top: 10,
+          right: 15,
+          child: TextButton(
+              onPressed: () {},
+              child: const Text(
+                'Изм.',
+                style: TextStyle(
+                    color: Colors.blue,
+                  fontSize: 17
+                ),
+              ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -124,7 +154,8 @@ class _NickNameWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Text('@_burbonchik',
+    return Text(
+      '@_burbonchik',
       style: TextStyle(
         fontSize: 16,
         color: Colors.grey[500],
@@ -140,7 +171,8 @@ class _TelephoneWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('+375442345489',
+    return Text(
+      '+375442345489',
       style: TextStyle(
         fontSize: 16,
         color: Colors.grey[500],
@@ -156,7 +188,8 @@ class _NameWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('Илья Бурван',
+    return const Text(
+      'Илья Бурван',
       style: TextStyle(
         fontSize: 25,
         fontWeight: FontWeight.w700,
